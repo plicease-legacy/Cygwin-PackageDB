@@ -46,28 +46,31 @@ has ua => (
   },
 );
 
+sub get
+{
+  my($self, $path) = @_;
+  $path =~ s{^/}{};
+  
+  my $uri = $self->uri->clone;
+  $uri->path(join('/', $uri->path, $path));
+  my $res = $self->ua->get($uri);
+  return $res if $res->is_success;
+  # TODO: some sort of structured exception?
+  die join(' ', $uri, $res->status_line);
+}
+
 sub fetch_setup_ini
 {
   my($self) = shift;
   my %args = ref($_[0]) eq 'HASH' ? %{ shift() } : @_ ;
+  
   $args{arch} //= 'x86';
 
   require Compress::Bzip2 if $args{bz2};
   
-  my $uri = $self->uri->clone;
-  $uri->path(join('/', $uri->path, $args{arch}, $args{bz2} ? 'setup.bz2' : 'setup.ini'));
+  my $res = $self->get(join('/', $args{arch}, $args{bz2} ? 'setup.bz2' : 'setup.ini'));  
   
-  my $res = $self->ua->get($uri);
-
-  if($res->is_success)
-  {
-    return $args{bz2} ? Compress::Bzip2::memBunzip($res->content) : $res->decoded_content;
-  }
-  else
-  {
-    # TODO: some sort of structured exception?
-    die join(' ', $uri, $res->status_line);
-  }
+  return $args{bz2} ? Compress::Bzip2::memBunzip($res->content) : $res->decoded_content;
 }
 
 sub as_string
