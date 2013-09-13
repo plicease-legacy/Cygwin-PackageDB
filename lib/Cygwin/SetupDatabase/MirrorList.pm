@@ -57,7 +57,7 @@ has mirrors => (
       foreach my $line (split /\n/, $res->decoded_content)
       {
         next if $line =~ /^\s*$/;
-        push @list, Cygwin::SetupDatabase::Mirror->new($line);
+        push @list, Cygwin::SetupDatabase::Mirror->new($line, ua => $self->ua);
       }
       return \@list;
     }
@@ -80,6 +80,7 @@ sub filter
   {
     next if $args->{region} && $args->{region} ne $mirror->region;
     next if $args->{subregion} && $args->{subregion} ne $mirror->subregion;
+    next if $args->{scheme} && $args->{scheme} ne $mirror->uri->scheme;
     push @list, $mirror;
   }
   

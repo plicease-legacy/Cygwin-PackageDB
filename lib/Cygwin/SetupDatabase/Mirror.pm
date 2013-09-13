@@ -4,14 +4,25 @@ use strict;
 use warnings;
 use v5.10;
 use Moo;
+use PerlX::Maybe qw( maybe );
 use warnings NONFATAL => 'all';
+
+# ABSTRACT: Cygwin package mirror
+# VERSION
 
 sub BUILDARGS
 {
   my $class = shift;
-  if(@_ == 1) {
+  if(@_ % 2) {
     my($uri,$host,$reg,$subreg) = split /;/, shift;
-    return { uri => $uri, host => $host, region => $reg, subregion => $subreg };
+    my %args = @_;
+    return {
+            uri       => $uri,
+            host      => $host,
+            region    => $reg,
+            subregion => $subreg,
+      maybe ua        => $args{ua},
+    };
   }
   return $class->SUPER::BUILDARGS(@_);
 }
@@ -25,6 +36,39 @@ has uri => (
 has host      => ( required => 1, is => 'ro' );
 has region    => ( required => 1, is => 'ro' );
 has subregion => ( required => 1, is => 'ro' );
+
+has ua => (
+  is      => 'ro',
+  lazy    => 1,
+  default => sub {
+    require LWP::UserAgent;
+    LWP::UserAgent->new;
+  },
+);
+
+sub fetch_setup_ini
+{
+  my($self) = shift;
+  my %args = ref($_[0]) eq 'HASH' ? %{ shift() } : @_ ;
+  $args{arch} //= 'x86';
+
+  require Compress::Bzip2 if $args{bz2};
+  
+  my $uri = $self->uri->clone;
+  $uri->path(join('/', $uri->path, $args{arch}, $args{bz2} ? 'setup.bz2' : 'setup.ini'));
+  
+  my $res = $self->ua->get($uri);
+
+  if($res->is_success)
+  {
+    return $args{bz2} ? Compress::Bzip2::memBunzip($res->content) : $res->decoded_content;
+  }
+  else
+  {
+    # TODO: some sort of structured exception?
+    die join(' ', $uri, $res->status_line);
+  }
+}
 
 sub as_string
 {
