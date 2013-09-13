@@ -4,8 +4,8 @@ use strict;
 use warnings;
 use v5.10;
 use Moo;
-use PerlX::Maybe qw( maybe );
 use warnings NONFATAL => 'all';
+use PerlX::Maybe qw( maybe );
 
 # ABSTRACT: Cygwin package mirror
 # VERSION
