@@ -13,11 +13,11 @@ use PerlX::Maybe qw( maybe );
 sub BUILDARGS
 {
   my $class = shift;
-  if(@_ % 2) {
+  if(@_ % 2) { # FIXME: single hash arg
     my $raw = shift;
-    my %args = @_;
     return {
       hash => $raw,
+      @_,
     };
   }
   return $class->SUPER::BUILDARGS(@_);

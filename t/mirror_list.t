@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 21;
+use Test::More tests => 24;
 use Cygwin::SetupDatabase::MirrorList;
 use File::Temp qw( tempdir );
 use Path::Class qw( file dir );
@@ -37,6 +37,8 @@ is $mirror_list->mirrors->[2]->host,      'mirrors.163.com';
 is $mirror_list->mirrors->[2]->region,    'Asia';
 is $mirror_list->mirrors->[2]->subregion, 'China';
 
+is $mirror_list->size, 3, 'mirrorlist.size = 3';
+
 my $africa = eval { $mirror_list->filter(region => 'Africa')   };
 my $china  = eval { $mirror_list->filter(subregion => 'China') };
 
@@ -45,6 +47,9 @@ isa_ok $china, 'Cygwin::SetupDatabase::MirrorList';
 
 is int(@{ $africa->mirrors }), 1, 'africa = 1';
 is int(@{ $china->mirrors  }), 2, 'china = 2';
+
+is $africa->size, 1, 'africa.size = 1';
+is $china->size,  2, 'china.size = 2';
 
 my $mirror = eval { $mirror_list->random_mirror };
 isa_ok $mirror, 'Cygwin::SetupDatabase::Mirror';

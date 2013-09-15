@@ -69,6 +69,8 @@ has mirrors => (
   },
 );
 
+sub size { int @{ shift->mirrors } }
+
 sub filter
 {
   my $self = shift;
