@@ -46,7 +46,7 @@ has mirror_list => (
 );
 
 has mirror => (
-  is      => 'ro',
+  is      => 'rw',
   lazy    => 1,
   default => sub {
     shift->mirror_list->random_mirror;
