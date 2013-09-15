@@ -53,4 +53,11 @@ has mirror => (
   },
 );
 
+sub package_list
+{
+  my $self = shift;
+  require Cygwin::SetupDatabase::PackageList;
+  Cygwin::SetupDatabase::PackageList->new($self->mirror->fetch_setup_ini);
+}
+
 1;

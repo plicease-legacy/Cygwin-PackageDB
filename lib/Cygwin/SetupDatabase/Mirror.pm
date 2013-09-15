@@ -6,6 +6,7 @@ use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
 use PerlX::Maybe qw( maybe );
+use overload '""' => sub { shift->as_string };
 
 # ABSTRACT: Cygwin package mirror
 # VERSION
