@@ -13,7 +13,7 @@ use PerlX::Maybe qw( maybe );
 sub BUILDARGS
 {
   my $class = shift;
-  if(@_ % 2) { # FIXME: single hash arg
+  if(@_ % 2 && !ref $_[0]) {
     my $raw = shift;
     return {
       hash => $raw,

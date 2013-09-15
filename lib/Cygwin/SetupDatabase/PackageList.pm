@@ -13,7 +13,7 @@ use Cygwin::SetupDatabase::Package;
 sub BUILDARGS
 {
   my $class = shift;
-  if(@_ % 2) {  # FIXME single hash arg
+  if(@_ % 2 && !ref $_[0]) {
     my $raw = shift;    
     my %ret = @_;
     my($preamble, @package_list) = split /@/, $raw;
