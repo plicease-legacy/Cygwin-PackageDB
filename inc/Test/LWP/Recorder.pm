@@ -8,8 +8,8 @@
 #
 use strict; use warnings;
 package Test::LWP::Recorder;
-BEGIN {
-  $Test::LWP::Recorder::VERSION = '0.1.0';
+{
+  $Test::LWP::Recorder::VERSION = '0.1.1';
 }
 BEGIN {
   $Test::LWP::Recorder::AUTHORITY = 'cpan:EALLENIII';
@@ -56,9 +56,10 @@ sub _filter_all_params {
     ## no critic (BuiltinFunctions::ProhibitStringySplit)
     my %query = map { ( split q{=} )[ 0, 1 ] } split q{\&}, $param_string;
     ## use critic;
-    return '' unless %query;
-    return reduce { $a . $self->_filter_param( $b, $query{$b} ) }
-    sort keys %query;
+    return %query
+        ? reduce { $a . $self->_filter_param( $b, $query{$b} ) }
+    sort keys %query
+        : q{};
 }
 
 sub _get_cache_key {
@@ -140,7 +141,8 @@ sub _get_cache {
 =pod
 
 =for :stopwords Edward Allen J. III cpan testmatrix url annocpan anno bugtracker rt cpants
-kwalitee diff irc mailto metadata placeholders motemen UserAgent LWP GPL UA
+kwalitee diff irc mailto metadata placeholders metacpan motemen UserAgent
+LWP GPL UA
 
 =encoding utf-8
 
@@ -150,7 +152,7 @@ Test::LWP::Recorder - Create an LWP UserAgent that records and plays back sessio
 
 =head1 VERSION
 
-  This document describes v0.1.0 of Test::LWP::Recorder - released June 07, 2011 as part of Test-LWP-Recorder.
+  This document describes v0.1.1 of Test::LWP::Recorder - released September 16, 2013 as part of Test-LWP-Recorder.
 
 =head1 SYNOPSIS
 
@@ -323,7 +325,7 @@ L<http://www.cpantesters.org/distro/T/Test-LWP-Recorder>
 
 CPAN Testers Matrix
 
-The CPAN Testers Matrix is a website that provides a visual way to determine what Perls/platforms PASSed for a distribution.
+The CPAN Testers Matrix is a website that provides a visual overview of the test results for a distribution on various Perls/platforms.
 
 L<http://matrix.cpantesters.org/?dist=Test-LWP-Recorder>
 
