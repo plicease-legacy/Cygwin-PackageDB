@@ -7,6 +7,10 @@ use Test::Differences;
 my $pkg = Cygwin::SetupDatabase::Package->new(do { local $/; <DATA> });
 
 isa_ok $pkg, 'Cygwin::SetupDatabase::Package';
+
+#use YAML ();
+#diag YAML::Dump($pkg->hash);
+
 is $pkg->name, 'perl', 'pkg.name = perl';
 
 is $pkg->sdesc, 'Larry Wall\'s Practical Extracting and Report Language', 'pkg.sdesc = Larry Wall\'s Practical Extracting and Report Language';
@@ -29,6 +33,9 @@ is_deeply [$pkg->source], [qw( x86/release/perl/perl-5.14.2-3-src.tar.bz2 176279
 
 $pkg = $pkg->prev;
 isa_ok $pkg, 'Cygwin::SetupDatabase::Package';
+
+#use YAML ();
+#diag YAML::Dump($pkg->hash);
 
 is $pkg->name, 'perl', 'pkg.name = perl';
 

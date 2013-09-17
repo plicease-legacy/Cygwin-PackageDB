@@ -41,38 +41,43 @@ has hash => (
       my $line = shift @raw;
       next if $line =~ /^\s*$/;
       
-      if($line =~ /^(\w+): (.*)$/)
+      if($line =~ /^(\w+):(.*)$/)
       {
         my $key = $1;
         my $val = $2;
-        my $escape = 0;
-        if($val =~ s/^"(.*)"$/$1/)
+        my @val;
+        
+        while(length($val) > 0)
         {
-          $escape = 1;
-        }
-        elsif($val =~ s/^"(.*)$/$1/)
-        {
-          $escape = 1;
-          while(@raw > 0)
+          if($val =~ s/^\s*([a-zA-Z0-9_\.\/:\\\+\~\-\!]+)//)
           {
-            $val .= "\n";
-            my $line = shift @raw;
-            if($line =~ s/"$//)
-            {
-              $val .= $line;
-              last;
-            }
-            $val .= $line;
+            push @val, $1;
+          }
+          # Question: what about "foo \" bar"
+          elsif($val =~ s/^\s*"(.*?)"//s)
+          {
+            my $val = $1;
+            $val =~ s/\\(.)/$1/sg;
+            push @val, $val;
+          }
+          elsif($val =~ /^\s"/s)
+          {
+            $val .= "\n" . shift @raw;
+          }
+          else
+          {
+            die "parse error: $line";
           }
         }
-        $val =~ s/\\(.)/$1/g if $escape;
-        $h->{$key} = $val;
+        
+        $h->{$key} = \@val;
       }
-      elsif($line eq '[prev]')
+      elsif($line =~ /^\[(curr|test|exp|prev)\]$/)
       {
-        $ret{prev} //= [];
+        my $type = $1;
+        $ret{$type} //= [];
         $h = {};
-        push @{ $ret{prev} }, $h;
+        push @{ $ret{$type} }, $h;
       }
       else
       {
@@ -84,14 +89,14 @@ has hash => (
   },
 );
 
-sub name     { shift->hash->{name} }
-sub sdesc    { shift->hash->{sdesc} }
-sub ldesc    { shift->hash->{ldesc} }
-sub version  { shift->hash->{version} }
-sub requires { [split /\s+/, shift->hash->{requires}] }
-sub category { [split /\s+/, shift->hash->{category}] }
-sub install  {  split /\s+/, shift->hash->{install}   }
-sub source   {  split /\s+/, shift->hash->{source}   }
+sub name     { shift->hash->{name}            }
+sub sdesc    { shift->hash->{sdesc}->[0]      }
+sub ldesc    { shift->hash->{ldesc}->[0]      }
+sub version  { shift->hash->{version}->[0]    }
+sub requires { shift->hash->{requires}        }
+sub category { shift->hash->{category}        }
+sub install  { @{ shift->hash->{install} }    }
+sub source   { @{ shift->hash->{source}  }    }
 
 sub prev
 {
