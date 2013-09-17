@@ -2,8 +2,11 @@ use strict;
 use warnings;
 use Test::More tests => 7;
 use Cygwin::SetupDatabase::MirrorList;
-use Test::LWP::Recorder;
 use Path::Class qw( file dir );
+use lib file(__FILE__)->parent->parent->subdir('inc')->absolute->stringify;
+use Test::LWP::Recorder;
+
+#note $INC{'Test/LWP/Recorder.pm'};
 
 my $ua = Test::LWP::Recorder->new({
   record    => 0,
