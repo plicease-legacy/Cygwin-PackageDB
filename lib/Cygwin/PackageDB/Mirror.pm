@@ -7,6 +7,7 @@ use Moo;
 use warnings NONFATAL => 'all';
 use PerlX::Maybe qw( maybe );
 use overload '""' => sub { shift->as_string };
+use Cygwin::PackageDB::Exception;
 
 # ABSTRACT: Cygwin package mirror
 # VERSION
@@ -60,11 +61,14 @@ sub get
 {
   my($self, $path) = @_;
   
-  my $uri = $self->uri_for($path);
-  my $res = $self->ua->get($uri);
+  require HTTP::Request;
+  my $req = HTTP::Request->new(GET => $self->uri_for($path));
+  my $res = $self->ua->request($req);
   return $res if $res->is_success;
-  # TODO: some sort of structured exception
-  die join(' ', $uri, $res->status_line);
+  Cygwin::PackageDB::NetworkException->throw(
+    req => $req,
+    res => $res,
+  );
 }
 
 sub fetch_setup_ini

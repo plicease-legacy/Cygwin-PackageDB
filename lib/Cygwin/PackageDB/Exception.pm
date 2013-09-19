@@ -52,12 +52,13 @@ has res => (
   required => 1,
 );
 
-has '+message' => (
-  default => sub {
-    my $self = shift;
-    join join(' ', $self->req->uri, $self->status_line);
-  },
-);
+around BUILDARGS => sub {
+  my $orig = shift;
+  my $self = shift;
+  my $r = $self->$orig(@_);
+  $r->{message} = join(' ', $r->{req}->uri, $r->{res}->status_line);
+  $r;
+};
 
 package Cygwin::PackageDB::ParserException;
 

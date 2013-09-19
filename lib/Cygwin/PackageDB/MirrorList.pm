@@ -5,6 +5,7 @@ use warnings;
 use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
+use Cygwin::PackageDB::Exception;
 
 # ABSTRACT: Cygwin package mirror list
 # VERSION
@@ -49,7 +50,10 @@ has mirrors => (
   lazy    => 1,
   default => sub {
     my $self = shift;
-    my $res = $self->ua->get($self->uri);
+    require HTTP::Request;
+    my $req = HTTP::Request->new(GET => $self->uri);
+    my $res = $self->ua->request($req);
+    $DB::single = 1;
     if($res->is_success)
     {
       require Cygwin::PackageDB::Mirror;
@@ -63,8 +67,10 @@ has mirrors => (
     }
     else
     {
-      # TODO: structured exception
-      die join(' ', $self->uri, $res->status_line);
+      Cygwin::PackageDB::NetworkException->throw(
+        req => $req,
+        res => $res,
+      );
     }
   },
 );
