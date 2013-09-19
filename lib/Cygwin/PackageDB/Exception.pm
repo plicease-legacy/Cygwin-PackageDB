@@ -75,12 +75,28 @@ error when it trys to parser the Cygwin C<setup.ini> file.
 =head3 raw
 
 If available, this attribute will contain a fragment of the C<setup.ini>
-file that contains an error.
+file that contains an error.  This is intended to aid in debugging, but
+the actual content may change as the implementaton evolves, so don't depend
+to closely on its contents.
+
+=head3 type
+
+A string identifying the type of error, will be one of C<preamble>,
+C<package_preamble>, C<key_value> or C<string>.
 
 =cut
 
-has raw => (
-  is => 'ro',
-);
+has raw => ( is => 'ro' );
+has type => ( is => 'ro', required => 1 );
+
+around BUILDARGS => sub {
+  my $orig = shift;
+  my $self = shift;
+  my $r = $self->$orig(@_);
+  $r->{message} = sprintf "parser error (%s): %s", $r->{type}, $r->{raw} // '**no context**';
+  $r;
+};
+
+# TODO: line numbers would be nice.
 
 1;

@@ -6,6 +6,7 @@ use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
 use PerlX::Maybe qw( maybe );
+use Cygwin::PackageDB::Exception;
 
 # ABSTRACT: Cygwin package mirror
 # VERSION
@@ -30,8 +31,13 @@ has hash => (
     return $_[0] if ref($_[0]) eq 'HASH';
     my @raw = split /\n/, $_[0];
     my %ret;
-    if((shift @raw) =~ m{^@? (\S+)})
-    { $ret{name} = $1 }
+    do {
+      my $line = shift @raw;
+      if($line =~ m{^@? (\S+)})
+      { $ret{name} = $1 }
+      else
+      { Cygwin::PackageDB::ParserException->throw(raw => $line, type => 'package_preamble') }
+    };
     
     my $h = \%ret;
     
@@ -66,8 +72,7 @@ has hash => (
           }
           else
           {
-            # TODO: structured exception.
-            die "parse error: $line";
+            Cygwin::PackageDB::ParserException->throw(raw => $line, type => 'string')
           }
         }
         
@@ -82,8 +87,7 @@ has hash => (
       }
       else
       {
-        # TODO: structured exception.
-        die "parse error: $line";
+        Cygwin::PackageDB::ParserException->throw(raw => $line, type => 'key_value')
       }
     }
     \%ret;

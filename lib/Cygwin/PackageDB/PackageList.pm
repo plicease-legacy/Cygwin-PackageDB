@@ -6,6 +6,7 @@ use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
 use Cygwin::PackageDB::Package;
+use Cygwin::PackageDB::Exception;
 
 # ABSTRACT: Cygwin package list
 # VERSION
@@ -19,6 +20,7 @@ sub BUILDARGS
     my($preamble, @package_list) = split /@/, $raw;
     foreach my $line (split /\n/, $preamble)
     {
+      my $raw = $line;
       $line =~ s/^#.*$//;
       next if $line =~ /^\s*$/;
       if($line =~ /^(.*):\s*(.*)$/)
@@ -26,6 +28,10 @@ sub BUILDARGS
         my($key,$val) = ($1,$2);
         $key =~ s/-/_/g;
         $ret{$key} = $val;
+      }
+      else
+      {
+        Cygwin::PackageDB::ParserException->throw(raw => $raw, type => 'preamble');
       }
     }
     $ret{packages} = \@package_list;
