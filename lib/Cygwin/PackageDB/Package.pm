@@ -66,6 +66,7 @@ has hash => (
           }
           else
           {
+            # TODO: structured exception.
             die "parse error: $line";
           }
         }
@@ -81,7 +82,7 @@ has hash => (
       }
       else
       {
-        # TODO: structured exception?
+        # TODO: structured exception.
         die "parse error: $line";
       }
     }

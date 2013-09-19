@@ -63,7 +63,7 @@ has mirrors => (
     }
     else
     {
-      # TODO: some sort of structured exception?
+      # TODO: structured exception
       die join(' ', $self->uri, $res->status_line);
     }
   },

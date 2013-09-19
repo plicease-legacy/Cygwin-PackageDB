@@ -63,7 +63,7 @@ sub get
   my $uri = $self->uri_for($path);
   my $res = $self->ua->get($uri);
   return $res if $res->is_success;
-  # TODO: some sort of structured exception?
+  # TODO: some sort of structured exception
   die join(' ', $uri, $res->status_line);
 }
 
