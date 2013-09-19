@@ -11,7 +11,12 @@ my $mirror_list_file = dir( tempdir( CLEANUP => 1 ) )->file("mirrors.lst");
 my $db = Cygwin::PackageDB->new(
   uri => do {
     my $file = dir( tempdir( CLEANUP => 1 ) )->file("mirrors.lst");
-    $file->spew(join ';', URI::file->new(file(__FILE__)->parent->subdir("mirror")->absolute), 'localhost', 'local','host');
+    $file->spew(
+      join("\n", 
+        join(';', URI::file->new(file(__FILE__)->parent->subdir("mirror")->absolute), 'localhost', 'local','host'),
+        join(';', URI::file->new(file(__FILE__)->parent->subdir("mirror")->absolute), 'localhost', 'other','place'),
+      ),
+    );
     $file;
   },
 );
