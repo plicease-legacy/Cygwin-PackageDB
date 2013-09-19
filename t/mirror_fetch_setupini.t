@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More tests => 5;
 use URI::file;
-use Cygwin::SetupDatabase::Mirror;
+use Cygwin::PackageDB::Mirror;
 use Path::Class qw( file dir );
 use URI::file;
 
@@ -11,14 +11,14 @@ $uri->host('localhost');
 
 note $uri->as_string;
 
-my $mirror = Cygwin::SetupDatabase::Mirror->new(
+my $mirror = Cygwin::PackageDB::Mirror->new(
   uri       => $uri,
   host      => $uri->host,
   region    => 'ThisServer',
   subregion => 'ThisFile',
 );
 
-isa_ok $mirror, 'Cygwin::SetupDatabase::Mirror';
+isa_ok $mirror, 'Cygwin::PackageDB::Mirror';
 
 note $mirror->as_string;
 

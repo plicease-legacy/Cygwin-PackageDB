@@ -1,12 +1,12 @@
 use strict;
 use warnings;
 use Test::More tests => 18;
-use Cygwin::SetupDatabase::Package;
+use Cygwin::PackageDB::Package;
 use Test::Differences;
 
-my $pkg = Cygwin::SetupDatabase::Package->new(do { local $/; <DATA> });
+my $pkg = Cygwin::PackageDB::Package->new(do { local $/; <DATA> });
 
-isa_ok $pkg, 'Cygwin::SetupDatabase::Package';
+isa_ok $pkg, 'Cygwin::PackageDB::Package';
 
 #use YAML ();
 #diag YAML::Dump($pkg->hash);
@@ -32,7 +32,7 @@ is_deeply [$pkg->install], [qw( x86/release/perl/perl-5.14.2-3.tar.bz2 11673542 
 is_deeply [$pkg->source], [qw( x86/release/perl/perl-5.14.2-3-src.tar.bz2 17627943 8a1d9eb3fd927b45b8c75fa8f590bcf0 )], 'pkg.source';
 
 $pkg = $pkg->prev;
-isa_ok $pkg, 'Cygwin::SetupDatabase::Package';
+isa_ok $pkg, 'Cygwin::PackageDB::Package';
 
 #use YAML ();
 #diag YAML::Dump($pkg->hash);

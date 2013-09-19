@@ -1,11 +1,11 @@
-package Cygwin::SetupDatabase::PackageList;
+package Cygwin::PackageDB::PackageList;
 
 use strict;
 use warnings;
 use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
-use Cygwin::SetupDatabase::Package;
+use Cygwin::PackageDB::Package;
 
 # ABSTRACT: Cygwin package list
 # VERSION
@@ -38,7 +38,7 @@ has packages => (
   is      => 'ro',
   default => sub { [] },
   coerce  => sub {
-    [map { ref $_ ? $_ : Cygwin::SetupDatabase::Package->new($_) } @{ $_[0] }];
+    [map { ref $_ ? $_ : Cygwin::PackageDB::Package->new($_) } @{ $_[0] }];
   },
 );
 

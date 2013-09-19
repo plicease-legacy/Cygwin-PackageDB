@@ -1,4 +1,4 @@
-package Cygwin::SetupDatabase::Mirror;
+package Cygwin::PackageDB::Mirror;
 
 use strict;
 use warnings;

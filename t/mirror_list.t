@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More tests => 24;
-use Cygwin::SetupDatabase::MirrorList;
+use Cygwin::PackageDB::MirrorList;
 use File::Temp qw( tempdir );
 use Path::Class qw( file dir );
 use URI::file;
@@ -10,11 +10,11 @@ my $mirror_list_file = file( tempdir( CLEANUP => 1), "mirror.lst" );
 my $mirror_list_uri  = URI::file->new($mirror_list_file);
 $mirror_list_file->spew(do { local $/; <DATA> });
 
-my $mirror_list = Cygwin::SetupDatabase::MirrorList->new(
+my $mirror_list = Cygwin::PackageDB::MirrorList->new(
   uri => $mirror_list_uri,
 );
 
-isa_ok $mirror_list, 'Cygwin::SetupDatabase::MirrorList';
+isa_ok $mirror_list, 'Cygwin::PackageDB::MirrorList';
 isa_ok eval { $mirror_list->uri }, 'URI';
 diag $@ if $@;
 
@@ -42,8 +42,8 @@ is $mirror_list->size, 3, 'mirrorlist.size = 3';
 my $africa = eval { $mirror_list->filter(region => 'Africa')   };
 my $china  = eval { $mirror_list->filter(subregion => 'China') };
 
-isa_ok $africa, 'Cygwin::SetupDatabase::MirrorList';
-isa_ok $china, 'Cygwin::SetupDatabase::MirrorList';
+isa_ok $africa, 'Cygwin::PackageDB::MirrorList';
+isa_ok $china, 'Cygwin::PackageDB::MirrorList';
 
 is int(@{ $africa->mirrors }), 1, 'africa = 1';
 is int(@{ $china->mirrors  }), 2, 'china = 2';
@@ -52,7 +52,7 @@ is $africa->size, 1, 'africa.size = 1';
 is $china->size,  2, 'china.size = 2';
 
 my $mirror = eval { $mirror_list->random_mirror };
-isa_ok $mirror, 'Cygwin::SetupDatabase::Mirror';
+isa_ok $mirror, 'Cygwin::PackageDB::Mirror';
 diag $@ if $@;
 
 note $mirror->as_string;

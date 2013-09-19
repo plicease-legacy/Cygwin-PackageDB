@@ -1,4 +1,4 @@
-# Cygwin::SetupDatabase
+# Cygwin::PackageDB
 
 Fetch and query the Cygwin Setup Package Database
 

@@ -1,4 +1,4 @@
-package Cygwin::SetupDatabase::Package;
+package Cygwin::PackageDB::Package;
 
 use strict;
 use warnings;

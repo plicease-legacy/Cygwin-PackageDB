@@ -1,4 +1,4 @@
-package Cygwin::SetupDatabase::MirrorList;
+package Cygwin::PackageDB::MirrorList;
 
 use strict;
 use warnings;
@@ -52,12 +52,12 @@ has mirrors => (
     my $res = $self->ua->get($self->uri);
     if($res->is_success)
     {
-      require Cygwin::SetupDatabase::Mirror;
+      require Cygwin::PackageDB::Mirror;
       my @list;
       foreach my $line (split /\n/, $res->decoded_content)
       {
         next if $line =~ /^\s*$/;
-        push @list, Cygwin::SetupDatabase::Mirror->new($line, ua => $self->ua);
+        push @list, Cygwin::PackageDB::Mirror->new($line, ua => $self->ua);
       }
       return \@list;
     }

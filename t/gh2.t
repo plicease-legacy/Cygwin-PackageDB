@@ -1,11 +1,11 @@
 use strict;
 use warnings;
 use Test::More tests => 3;
-use Cygwin::SetupDatabase::Package;
+use Cygwin::PackageDB::Package;
 
-my $package = eval { Cygwin::SetupDatabase::Package->new(do { local $/; <DATA> }) };
+my $package = eval { Cygwin::PackageDB::Package->new(do { local $/; <DATA> }) };
 diag $@ if $@;
-isa_ok $package, 'Cygwin::SetupDatabase::Package';
+isa_ok $package, 'Cygwin::PackageDB::Package';
 
 is $package->prev->hash->{message}->[0], 'avahi';
 like $package->prev->hash->{message}->[1], qr{^Due to Cygwin.*DL999$}sm;

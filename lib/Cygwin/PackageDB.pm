@@ -1,4 +1,4 @@
-package Cygwin::SetupDatabase;
+package Cygwin::PackageDB;
 
 use strict;
 use warnings;
@@ -28,8 +28,8 @@ has mirror_list => (
   lazy    => 1,
   default => sub {
     my $self = shift;
-    require Cygwin::SetupDatabase::MirrorList;
-    my $list = Cygwin::SetupDatabase::MirrorList->new( ua => $self->ua );
+    require Cygwin::PackageDB::MirrorList;
+    my $list = Cygwin::PackageDB::MirrorList->new( ua => $self->ua );
     if($self->scheme || $self->region || $self->subregion)
     {
       return $list->filter(
@@ -56,8 +56,8 @@ has mirror => (
 sub package_list
 {
   my $self = shift;
-  require Cygwin::SetupDatabase::PackageList;
-  Cygwin::SetupDatabase::PackageList->new($self->mirror->fetch_setup_ini);
+  require Cygwin::PackageDB::PackageList;
+  Cygwin::PackageDB::PackageList->new($self->mirror->fetch_setup_ini);
 }
 
 1;
