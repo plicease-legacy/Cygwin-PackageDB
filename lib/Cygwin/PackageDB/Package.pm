@@ -101,7 +101,7 @@ sub source   { @{ shift->hash->{source}  }    }
 sub prev
 {
   my($self) = shift;
-  return undef unless @{ $self->hash->{prev} };
+  return undef unless @{ $self->hash->{prev} // [] };
   # make a copy of hash
   my %h = %{ $self->hash };
   $h{prev} = [ @{ $self->hash->{prev} } ];
