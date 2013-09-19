@@ -113,3 +113,11 @@ This software is copyright (c) 2013 by Graham Ollis.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
+
+# SEE ALSO
+
+- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
+- [Cygwin::PackageDB::Exception](http://search.cpan.org/perldoc?Cygwin::PackageDB::Exception)
+- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
+- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
+- [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldoc?Cygwin::PackageDB::Mirror)
