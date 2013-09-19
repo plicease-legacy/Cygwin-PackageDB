@@ -1,1 +1,20 @@
---- {}
+---
+pod_spelling_system:
+  # list of words that are spelled correctly
+  # (regardless of what spell check thinks)
+  stopwords:
+    - bzip2
+    - bz2
+    - subregion
+    - ua
+    - req
+    - ldesc
+    - sdesc
+    - md5sum
+    - md5
+
+pod_coverage:
+  # format is "Class#method" or "Class", regex allowed
+  # for either Class or method.
+  private:
+    - .*#BUILDARGS

@@ -11,6 +11,27 @@ use Cygwin::PackageDB::Exception;
 # ABSTRACT: Cygwin package mirror
 # VERSION
 
+=head1 SYNOPSIS
+
+ use Cygwin::PackageDB;
+ my $db = Cygwin::PackageDB->new;
+ # $pl isa Cygwin::PackageDB::PackageList
+ my $pl = $db->package_list;
+ 
+ foreach my $package (@{ $pl->packages })
+ {
+   # $package isa Cygwin::PackageDB::Package
+   say $package->name;
+   # relative path, size and md5sum of the binary package
+   my($path, $size, $md5sum) = $package->install;
+ }
+
+=head1 DESCRIPTION
+
+This class represents a single Cygwin Package.
+
+=cut
+
 sub BUILDARGS
 {
   my $class = shift;
@@ -23,6 +44,17 @@ sub BUILDARGS
   }
   return $class->SUPER::BUILDARGS(@_);
 }
+
+=head1 ATTRIBUTES
+
+=head2 hash
+
+This is the internal representation of the package for this
+class stored as a hash reference.  Feel free to peek into
+it, but keep in mind that its contents are subject to change,
+so don't count on any particular structure or organization.
+
+=cut
 
 has hash => (
   is       => 'ro',
@@ -94,6 +126,46 @@ has hash => (
   },
 );
 
+=head2 name
+
+The name of the package.
+
+=head2 sdesc
+
+Short description of the package.
+
+=head2 ldesc
+
+Long description of the package.
+
+=head2 version
+
+Version of the package.
+
+=head2 requires
+
+List of packages that are prerequisites of this one.  Returned as
+a list reference.
+
+=head2 category
+
+List of categories this package belongs to.  Returned as a list
+reference.
+
+=head2 install
+
+ my($path, $size, $md5sum) = $package->install;
+
+Returns the relative path, size and md5 sum of the binary package.
+
+=head2 source
+
+ my($path, $size, $md5sum) = $package->source;
+
+Returns the relative path, size and md5 sum of the source package.
+
+=cut
+
 sub name     { shift->hash->{name}               }
 sub sdesc    { shift->hash->{sdesc}->[0]         }
 sub ldesc    { shift->hash->{ldesc}->[0]         }
@@ -102,6 +174,16 @@ sub requires { shift->hash->{requires}           }
 sub category { shift->hash->{category}           }
 sub install  { @{ shift->hash->{install} // [] } }
 sub source   { @{ shift->hash->{source}  // [] } }
+
+=head1 METHODS
+
+=head2 prev
+
+Returns the previous version of the package as an instance of
+C<Cygwin::PackageDB::Package>, if available.  Returns undef if 
+it is not available.
+
+=cut
 
 sub prev
 {

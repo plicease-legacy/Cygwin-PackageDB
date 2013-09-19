@@ -11,7 +11,7 @@ use warnings NONFATAL => 'all';
 
 =head1 DESCRIPTION
 
-L<Cygwin::PackageDB> uses excpetions that subclass
+L<Cygwin::PackageDB> uses exceptions that subclass
 L<Throwable::Error>.  They are listed here for your reference.
 
 =head1 EXCEPTIONS
@@ -69,14 +69,14 @@ extends 'Cygwin::PackageDB::Exception';
 
 =head2 Cygwin::PackageDB::ParserException
 
-This exception is thrown when L<Cygwin::PackageDB> enconters an
-error when it trys to parser the Cygwin C<setup.ini> file.
+This exception is thrown when L<Cygwin::PackageDB> encounters an
+error when it tries to parser the Cygwin C<setup.ini> file.
 
 =head3 raw
 
 If available, this attribute will contain a fragment of the C<setup.ini>
 file that contains an error.  This is intended to aid in debugging, but
-the actual content may change as the implementaton evolves, so don't depend
+the actual content may change as the implementation evolves, so don't depend
 to closely on its contents.
 
 =head3 type
