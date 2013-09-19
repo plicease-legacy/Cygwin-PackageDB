@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Cygwin::PackageDB::Mirror;
-use Test::More tests => 18;
+use Test::More tests => 24;
 use URI;
 
 do {
@@ -18,6 +18,8 @@ do {
   is $mirror->host, 'example.com';
   is $mirror->region, 'Australasia';
   is $mirror->subregion, 'Australia';
+  is $mirror->uri_for("/foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
+  is $mirror->uri_for("foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
 };
 
 do {
@@ -34,6 +36,8 @@ do {
   is $mirror->host, 'example.com';
   is $mirror->region, 'Australasia';
   is $mirror->subregion, 'Australia';
+  is $mirror->uri_for("/foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
+  is $mirror->uri_for("foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
 };
 
 do {
@@ -47,4 +51,6 @@ do {
   is $mirror->host, 'example.com';
   is $mirror->region, 'Australasia';
   is $mirror->subregion, 'Australia';
+  is $mirror->uri_for("/foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
+  is $mirror->uri_for("foo/bar/baz")->as_string, 'http://example.com/cygwin/foo/bar/baz';
 };

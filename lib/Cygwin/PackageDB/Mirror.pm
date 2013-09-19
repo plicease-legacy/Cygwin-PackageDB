@@ -47,13 +47,20 @@ has ua => (
   },
 );
 
-sub get
+sub uri_for
 {
   my($self, $path) = @_;
   $path =~ s{^/}{};
-  
   my $uri = $self->uri->clone;
   $uri->path(join('/', $uri->path, $path));
+  $uri;
+}
+
+sub get
+{
+  my($self, $path) = @_;
+  
+  my $uri = $self->uri_for($path);
   my $res = $self->ua->get($uri);
   return $res if $res->is_success;
   # TODO: some sort of structured exception?
