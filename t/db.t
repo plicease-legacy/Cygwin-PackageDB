@@ -2,8 +2,20 @@ use strict;
 use warnings;
 use Test::More tests => 4;
 use Cygwin::PackageDB;
+use URI::file;
+use Path::Class qw( file dir );
+use File::Temp qw( tempdir );
 
-my $db = Cygwin::PackageDB->new( region => 'United States', scheme => 'http' );
+my $mirror_list_file = dir( tempdir( CLEANUP => 1 ) )->file("mirrors.lst");
+
+my $db = Cygwin::PackageDB->new(
+  uri => do {
+    my $file = dir( tempdir( CLEANUP => 1 ) )->file("mirrors.lst");
+    $file->spew(join ';', URI::file->new(file(__FILE__)->parent->subdir("mirror")->absolute), 'localhost', 'local','host');
+    $file;
+  },
+);
+  
 isa_ok $db,                       'Cygwin::PackageDB';
 isa_ok eval { $db->mirror_list }, 'Cygwin::PackageDB::MirrorList';
 diag $@ if $@;

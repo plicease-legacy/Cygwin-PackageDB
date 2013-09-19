@@ -5,6 +5,7 @@ use warnings;
 use v5.10;
 use Moo;
 use warnings NONFATAL => 'all';
+use PerlX::Maybe qw( maybe );
 
 # ABSTRACT: Fetch and query the Cygwin Setup Package Database
 # VERSION
@@ -18,6 +19,8 @@ has ua => (
   },
 );
 
+has uri => ( is => 'ro' );
+
 foreach my $attr ( qw( scheme region subregion ) )
 {
   has $attr => ( is => 'ro' );
@@ -29,7 +32,10 @@ has mirror_list => (
   default => sub {
     my $self = shift;
     require Cygwin::PackageDB::MirrorList;
-    my $list = Cygwin::PackageDB::MirrorList->new( ua => $self->ua );
+    my $list = Cygwin::PackageDB::MirrorList->new(
+            ua => $self->ua,
+      maybe uri => $self->uri,
+    );
     if($self->scheme || $self->region || $self->subregion)
     {
       return $list->filter(
