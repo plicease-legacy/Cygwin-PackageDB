@@ -89,14 +89,14 @@ has hash => (
   },
 );
 
-sub name     { shift->hash->{name}            }
-sub sdesc    { shift->hash->{sdesc}->[0]      }
-sub ldesc    { shift->hash->{ldesc}->[0]      }
-sub version  { shift->hash->{version}->[0]    }
-sub requires { shift->hash->{requires}        }
-sub category { shift->hash->{category}        }
-sub install  { @{ shift->hash->{install} }    }
-sub source   { @{ shift->hash->{source}  }    }
+sub name     { shift->hash->{name}               }
+sub sdesc    { shift->hash->{sdesc}->[0]         }
+sub ldesc    { shift->hash->{ldesc}->[0]         }
+sub version  { shift->hash->{version}->[0]       }
+sub requires { shift->hash->{requires}           }
+sub category { shift->hash->{category}           }
+sub install  { @{ shift->hash->{install} // [] } }
+sub source   { @{ shift->hash->{source}  // [] } }
 
 sub prev
 {
