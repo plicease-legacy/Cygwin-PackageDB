@@ -12,6 +12,7 @@ pod_spelling_system:
     - sdesc
     - md5sum
     - md5
+    - prev
 
 pod_coverage:
   # format is "Class#method" or "Class", regex allowed

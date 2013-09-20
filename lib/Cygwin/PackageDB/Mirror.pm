@@ -175,7 +175,7 @@ one of either x86 or x86_64
 =item bz2
 
 If true then download the bzip2 compressed version of setup.ini instead
-of the plain text.  This requires L<Compress::Bzip2>, which isn't a
+of the plain text.  This requires L<IO::Uncompress::Bunzip2>, which isn't a
 hard prerequisite of this module, so make sure you have it installed
 or mark it as a prerequisite of your code if you use it.  The default
 is false.
@@ -191,11 +191,21 @@ sub fetch_setup_ini
   
   $args{arch} //= 'x86';
 
-  require Compress::Bzip2 if $args{bz2};
+  require IO::Uncompress::Bunzip2 if $args{bz2};
   
   my $res = $self->get(join('/', $args{arch}, $args{bz2} ? 'setup.bz2' : 'setup.ini'));  
-  
-  return $args{bz2} ? Compress::Bzip2::memBunzip($res->content) : $res->decoded_content;
+
+  return $args{bz2} ? _bunzip2($res->content) : $res->decoded_content;
+}
+
+
+sub _bunzip2
+{
+  my $source = shift;
+  my $output = shift;
+  IO::Uncompress::Bunzip2::bunzip2(\$source, \$output) 
+    || die "bunzip2 failed: $IO::Uncompress::Bunzip2::Bunzip2Error\n";
+  $output;
 }
 
 =head2 as_string
@@ -210,6 +220,25 @@ sub as_string
 {
   my($self) = @_;
   join ';', $self->uri, $self->host, $self->region, $self->subregion;
+}
+
+=head2 can_use_bz2
+
+ $mirror->fetch_setup_ini(
+   bz2 => Cygwin::PackageDB::Mirror->can_use_bz2,
+ );
+
+Returns true if the perl environment supports decompressing bzip2 content.
+This may be called as a class (or instance) method, and can be used as shown
+above to turn on compression only if it is available.  This is preferable
+to requiring L<IO::Uncompress::Bunzip2> yourself, as the underlying bzip2
+implementation used may change in the future.
+
+=cut
+
+sub can_use_bz2
+{
+  eval { require IO::Uncompress::Bunzip2; 1 };
 }
 
 1;

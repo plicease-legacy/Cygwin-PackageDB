@@ -173,7 +173,7 @@ one of either x86 or x86_64
 =item bz2
 
 If true then download the bzip2 compressed version of setup.ini instead
-of the plain text.  This requires L<Compress::Bzip2>, which isn't a
+of the plain text.  This requires L<IO::Uncompress::Bunzip2>, which isn't a
 hard prerequisite of this module, so make sure you have it installed
 or mark it as a prerequisite of your code if you use it.  The default
 is false.

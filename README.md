@@ -98,7 +98,7 @@ additional options for this method:
 - bz2
 
     If true then download the bzip2 compressed version of setup.ini instead
-    of the plain text.  This requires [Compress::Bzip2](http://search.cpan.org/perldoc?Compress::Bzip2), which isn't a
+    of the plain text.  This requires [IO::Uncompress::Bunzip2](http://search.cpan.org/perldoc?IO::Uncompress::Bunzip2), which isn't a
     hard prerequisite of this module, so make sure you have it installed
     or mark it as a prerequisite of your code if you use it.  The default
     is false.
@@ -116,8 +116,8 @@ the same terms as the Perl 5 programming language system itself.
 
 # SEE ALSO
 
-- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
 - [Cygwin::PackageDB::Exception](http://search.cpan.org/perldoc?Cygwin::PackageDB::Exception)
-- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
-- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
 - [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldoc?Cygwin::PackageDB::Mirror)
+- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
+- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
+- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
