@@ -1,4 +1,4 @@
-package inc::Todo;
+package inc::SeeAlso;
 
 use strict;
 use warnings;
