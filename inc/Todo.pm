@@ -29,9 +29,10 @@ sub munge_file
   
   my $content = $file->content;
   
-  $content .= "\n\n=head1 SEE ALSO\n\n=over 4\n\n"
-           . join("\n\n", map { "=item L<$_>" } grep { $_ ne $class }@$classes)
-           . "\n\n=back\n\n=cut\n";
+  my $see_also = "=head1 SEE ALSO\n\n=over 4\n\n"
+               . join("\n\n", map { "=item L<$_>" } grep { $_ ne $class }@$classes)
+               . "\n\n=back\n\n";
+  $content =~ s{^(=head1 AUTHOR)}{$see_also$1}m;
   
   $file->content($content);
 }
