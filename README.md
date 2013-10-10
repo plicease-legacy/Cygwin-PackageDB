@@ -105,11 +105,11 @@ additional options for this method:
 
 # SEE ALSO
 
-- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
 - [Cygwin::PackageDB::Exception](http://search.cpan.org/perldoc?Cygwin::PackageDB::Exception)
-- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
-- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
 - [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldoc?Cygwin::PackageDB::Mirror)
+- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
+- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
+- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
 
 # AUTHOR
 

@@ -2,6 +2,9 @@ Revision history for {{$dist->name}}
 
 {{$NEXT}}
 
+0.03      2013-10-10 10:33:30 -0400
+  - documentation
+
 0.02      2013-09-20 15:52:37 -0400
   - use IO::Uncompress::Bunzip2 instead of Compress::Bzip2
 
