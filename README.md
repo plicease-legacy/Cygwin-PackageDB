@@ -36,7 +36,7 @@ work on any Perl supported platform with the appropriate prerequisites.
 
 ## ua
 
-The [LWP::UserAgent](http://search.cpan.org/perldoc?LWP::UserAgent) instance used to fetch files from the Internet.
+The [LWP::UserAgent](https://metacpan.org/pod/LWP::UserAgent) instance used to fetch files from the Internet.
 You can provide your own if you prefer, or one will be created if
 you don't.
 
@@ -45,8 +45,8 @@ you don't.
 A URI that points to the mirror list.  [http://cygwin.com/mirrors.lst](http://cygwin.com/mirrors.lst) will
 be used if you don't specify anything.  You may use any of:
 
-- an instance of [URI](http://search.cpan.org/perldoc?URI)
-- an instance of [Path::Class::File](http://search.cpan.org/perldoc?Path::Class::File) for a local mirror
+- an instance of [URI](https://metacpan.org/pod/URI)
+- an instance of [Path::Class::File](https://metacpan.org/pod/Path::Class::File) for a local mirror
 - a string for either a URL or local file
 
 ## scheme
@@ -72,13 +72,13 @@ or `Australia` (yeah, I know).
 
 List of mirrors, already pruned of any unwanted mirrors (specified via
 `scheme`, `region` or `subregion`).  This is an instance of
-[Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList).
+[Cygwin::PackageDB::MirrorList](https://metacpan.org/pod/Cygwin::PackageDB::MirrorList).
 
 ## mirror
 
 Mirror to use.  This will be selected randomly, from `mirror_list`, or
 you can set it to one that you prefer as it is a read/write attribute.
-This is an instance of [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldoc?Cygwin::PackageDB::Mirror).
+This is an instance of [Cygwin::PackageDB::Mirror](https://metacpan.org/pod/Cygwin::PackageDB::Mirror).
 
 # METHODS
 
@@ -88,7 +88,7 @@ This is an instance of [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldo
     my $pl = $db->package_list(%args);
 
 Fetch a full package list from the selected mirror.  An instance of
-[Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList) will be returned.  You may specify 
+[Cygwin::PackageDB::PackageList](https://metacpan.org/pod/Cygwin::PackageDB::PackageList) will be returned.  You may specify 
 additional options for this method:
 
 - arch
@@ -98,18 +98,18 @@ additional options for this method:
 - bz2
 
     If true then download the bzip2 compressed version of setup.ini instead
-    of the plain text.  This requires [IO::Uncompress::Bunzip2](http://search.cpan.org/perldoc?IO::Uncompress::Bunzip2), which isn't a
+    of the plain text.  This requires [IO::Uncompress::Bunzip2](https://metacpan.org/pod/IO::Uncompress::Bunzip2), which isn't a
     hard prerequisite of this module, so make sure you have it installed
     or mark it as a prerequisite of your code if you use it.  The default
     is false.
 
 # SEE ALSO
 
-- [Cygwin::PackageDB::Exception](http://search.cpan.org/perldoc?Cygwin::PackageDB::Exception)
-- [Cygwin::PackageDB::Mirror](http://search.cpan.org/perldoc?Cygwin::PackageDB::Mirror)
-- [Cygwin::PackageDB::MirrorList](http://search.cpan.org/perldoc?Cygwin::PackageDB::MirrorList)
-- [Cygwin::PackageDB::Package](http://search.cpan.org/perldoc?Cygwin::PackageDB::Package)
-- [Cygwin::PackageDB::PackageList](http://search.cpan.org/perldoc?Cygwin::PackageDB::PackageList)
+- [Cygwin::PackageDB::Package](https://metacpan.org/pod/Cygwin::PackageDB::Package)
+- [Cygwin::PackageDB::PackageList](https://metacpan.org/pod/Cygwin::PackageDB::PackageList)
+- [Cygwin::PackageDB::Mirror](https://metacpan.org/pod/Cygwin::PackageDB::Mirror)
+- [Cygwin::PackageDB::Exception](https://metacpan.org/pod/Cygwin::PackageDB::Exception)
+- [Cygwin::PackageDB::MirrorList](https://metacpan.org/pod/Cygwin::PackageDB::MirrorList)
 
 # AUTHOR
 
