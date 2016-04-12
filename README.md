@@ -105,11 +105,11 @@ additional options for this method:
 
 # SEE ALSO
 
+- [Cygwin::PackageDB::Exception](https://metacpan.org/pod/Cygwin::PackageDB::Exception)
+- [Cygwin::PackageDB::Mirror](https://metacpan.org/pod/Cygwin::PackageDB::Mirror)
+- [Cygwin::PackageDB::MirrorList](https://metacpan.org/pod/Cygwin::PackageDB::MirrorList)
 - [Cygwin::PackageDB::Package](https://metacpan.org/pod/Cygwin::PackageDB::Package)
 - [Cygwin::PackageDB::PackageList](https://metacpan.org/pod/Cygwin::PackageDB::PackageList)
-- [Cygwin::PackageDB::Mirror](https://metacpan.org/pod/Cygwin::PackageDB::Mirror)
-- [Cygwin::PackageDB::Exception](https://metacpan.org/pod/Cygwin::PackageDB::Exception)
-- [Cygwin::PackageDB::MirrorList](https://metacpan.org/pod/Cygwin::PackageDB::MirrorList)
 
 # AUTHOR
 
